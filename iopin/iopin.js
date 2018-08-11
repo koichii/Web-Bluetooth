@@ -17,6 +17,7 @@ var chosenIoPinService = null;
 var connectDevice = null;
 
 console.log("start!!!")
+document.js.x.value = 'start'
 
 // disconnect process
 function disconnect () {
