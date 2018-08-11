@@ -85,6 +85,7 @@ function handlePinDataCharacteristic3(characteristic) {
 
 function setPinAdConfiguration(ad_flags) {
   if (!chosenIoPinService) {
+    document.js.y.value = 'ad_flags NG'
     return Promise.reject(new Error('No service selected yet.'));
   }
   return chosenIoPinService.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
@@ -95,6 +96,7 @@ function setPinAdConfiguration(ad_flags) {
 }
 function setPinIoConfiguration(io_flags_out) {
   if (!chosenIoPinService) {
+    document.js.y.value = 'io_flags_out NG'
     return Promise.reject(new Error('No service selected yet.'));
   }
   return chosenIoPinService.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
@@ -118,6 +120,7 @@ function setPinData(pindata) {
 function connect() {
 	StartService()
 	.then(()=> {
+		document.js.y.value = 'OKOK'
 		// Configure pin 0
 		//   Digital
 	    let ad_flags = new Uint8Array([0x00]);
