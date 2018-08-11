@@ -1,5 +1,5 @@
 /* define Parameters **************************************************************/
-// BLEデバイス名接頭句 89
+// BLEデバイス名接頭句 90
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
 // micro:bit BLE IO Pin UUID
 const IOPINSERVICE_SERVICE_UUID = 'e95d127b-251d-470a-a062-fa1922dfa9a8'
@@ -84,6 +84,7 @@ function setPinIoConfiguration(characteristic) {
 function handleCharacteristicValueChanged(event) {
 	let value = event.target.value.getUint8(1);
 	console.log(value);
+	document.js.x.value = value
 }
 	 
 // start service event
@@ -91,7 +92,8 @@ function startService (characteristic) {
 	alert("start");
 	characteristic.startNotifications();
         characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
-	
+
+	alert("start2");
 	ioPinDataCharacteristic = characteristic;
 	ioPinDataCharacteristic.writeValue(new Uint8Array([0x00, 0x00]))
 	.catch(error => {
