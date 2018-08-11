@@ -61,8 +61,7 @@ function handlePinDataCharacteristic1(characteristic) {
    console.log("Unknown location.");
     return Promise.resolve();
   }
-  document.js.y.value = 'OK'
-  console.log("OK1.");
+  document.js.y.value = 'OK1'
   return Promise.resolve();
 }
 function handlePinDataCharacteristic2(characteristic) {
@@ -71,8 +70,7 @@ function handlePinDataCharacteristic2(characteristic) {
    console.log("Unknown location.");
     return Promise.resolve();
   }
-  document.js.y.value = 'OK'
-  console.log("OK2.");
+  document.js.y.value = 'OK2'
   return Promise.resolve();
 }
 function handlePinDataCharacteristic3(characteristic) {
@@ -81,8 +79,7 @@ function handlePinDataCharacteristic3(characteristic) {
    console.log("Unknown location.");
     return Promise.resolve();
   }
-  document.js.y.value = 'OK'
-  console.log("OK3.");
+  document.js.y.value = 'OK3'
   return Promise.resolve();
 }
 
