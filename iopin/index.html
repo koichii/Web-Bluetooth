@@ -2,15 +2,16 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<script type="text/javascript" src="accelerometer.js"></script>
-<title></title>
+<script type="text/javascript" src="iopin.js"></script>
+<title>iopin</title>
 </head>
 
 <body>
 <form name="js">
 micro:bit BLE
-<input type="button" value="接続" onclick="connect();"/>
+<input type="button" value="接続" onclick="connect();"/><br />
+<input type="button" value="ON" onclick="ledOn();"/><br />
+<input type="button" value="OFF" onclick="ledOff();"/><br />
 <input type="button" value="切断" onclick="disconnect();" /><br />
   加速度センサー値<br />
  X=<input type="text" name="x" value="" />/
