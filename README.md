@@ -35,3 +35,5 @@ bluetooth.startLEDService()
 bluetooth.startTemperatureService()
 basic.showIcon(IconNames.Heart)
 ```
+
+https://lancaster-university.github.io/microbit-docs/resources/bluetooth/bluetooth_profile.html
