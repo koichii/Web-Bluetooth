@@ -14,7 +14,7 @@ const MSG_DISCONNECTED = 'Disconnected'
 // 接続するBluetoothデバイス
 let connectDevice = null;
 // LEDステータスキャラクタリスティック
-let chosenService = null;
+let ledMatrixStateCharacteristic = null;
 
 // disconnect process
 function onClickStopButton () {
@@ -22,7 +22,7 @@ function onClickStopButton () {
 		return
 	connectDevice.gatt.disconnect()
 	connectDevice = null;
-	chosenService = null;
+	ledMatrixStateCharacteristic = null;
 	alert(MSG_DISCONNECTED)
 }
 
@@ -39,7 +39,7 @@ function onClickStartButton () {
 		.then(server => {
 			server.getPrimaryService(LED_SERVICE)
 			.then(service => {
-				chosenService = service;
+				//chosenService = service;
 				service.getCharacteristic(LED_MATRIX_STATE)
 				.then(startService)
 				.catch(error => {
