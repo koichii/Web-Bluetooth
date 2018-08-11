@@ -1,5 +1,5 @@
 /* define Parameters **************************************************************/
-// BLEデバイス名接頭句 1
+// BLEデバイス名
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
 // micro:bit BLE IO Pin UUID
 const IOPINSERVICE_SERVICE_UUID = 'e95d127b-251d-470a-a062-fa1922dfa9a8'
@@ -35,8 +35,10 @@ function connect() {
 	.then(device => {
 		connectDevice = device
 		return device.gatt.connect()
+	})
 	.then(server => {
 		return server.getPrimaryService(IOPINSERVICE_SERVICE_UUID)
+	})
 	.then(service => {
 		service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
 			.then(setPinAdConfiguration)
