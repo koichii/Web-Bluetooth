@@ -42,12 +42,11 @@ function StartService() {
 	.then(device => {
 	  document.js.x.value = 'device'
 	  connectDevice = device
-	  device.gatt.connect()
+	  return device.gatt.connect()
 	})
 	.then(server => {
 	  document.js.x.value = 'server'
 	  server.getPrimaryService(ACCELEROMETERSERVICE_SERVICE_UUID)
-	})
 	.then(service => {
 	  document.js.x.value = 'service'
 	  chosenIoPinService = service;
@@ -60,6 +59,7 @@ function StartService() {
 	      .then(handlePinDataCharacteristic),
 	  ]);
 	});
+     })
 }
 
 function handlePinDataCharacteristic(characteristic) {
