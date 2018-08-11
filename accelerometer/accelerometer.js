@@ -32,23 +32,23 @@ function connect () {
 	})
 	.then(device => {
 		connectDevice = device
-		return device.gatt.connect()
-	})
-	.then(server => {
-		server.getPrimaryService(ACCELEROMETERSERVICE_SERVICE_UUID)
-		.then(service => {
-			chosenService = service;
-			service.getCharacteristic(ACCELEROMETERDATA_CHARACTERISTIC_UUID)
-			.then(startService)
-			.catch(error => {
-				console.log(error)
-				alert(error)
+		device.gatt.connect()
+		.then(server => {
+			server.getPrimaryService(ACCELEROMETERSERVICE_SERVICE_UUID)
+			.then(service => {
+				chosenService = service;
+				service.getCharacteristic(ACCELEROMETERDATA_CHARACTERISTIC_UUID)
+				.then(startService)
+				.catch(error => {
+					console.log(error)
+					alert(error)
+				})
 			})
 		})
-	})
-	.catch(error => {
-		console.log(error)
-		alert(error)
+		.catch(error => {
+			console.log(error)
+			alert(error)
+		})
 	})
 }
 
