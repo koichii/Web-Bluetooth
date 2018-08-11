@@ -71,7 +71,7 @@ function setPinIoConfiguration(pinio) {
   });
 }
 
-function configPin() {
+function connect() {
 	// Configure pin 0
 	//   Digital
     let ad_flags = new Uint8Array([0x00]);
@@ -81,11 +81,11 @@ function configPin() {
 	setPinIoConfiguration(io_flags_out)
 }
 
-function switchOn() {
+function ledOn() {
     let switch_on_pin_0 = new Uint8Array([0x00, 0x01])
 	setPinIoConfiguration(switch_on_pin_0)
 }
-function switchOff() {
+function ledOff() {
     let switch_off_pin_0 = new Uint8Array([0x00, 0x00])
 	setPinIoConfiguration(switch_off_pin_0)
 }
