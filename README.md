@@ -13,3 +13,23 @@ Android の Chrome ブラウザで動作テスト
 
 [IO ピン](./iopin)
 [IO ピン ソース](./iopin/iopin.js)
+
+マイクロビットのプログラムソース
+bluetooth.onBluetoothConnected(() => {
+    basic.showIcon(IconNames.Diamond)
+})
+bluetooth.onBluetoothDisconnected(() => {
+    basic.showIcon(IconNames.No)
+})
+input.onButtonPressed(Button.A, () => {
+    pins.digitalWritePin(DigitalPin.P0, 1)
+})
+input.onButtonPressed(Button.B, () => {
+    pins.digitalWritePin(DigitalPin.P0, 0)
+})
+bluetooth.startAccelerometerService()
+bluetooth.startButtonService()
+bluetooth.startIOPinService()
+bluetooth.startLEDService()
+bluetooth.startTemperatureService()
+basic.showIcon(IconNames.Heart)
