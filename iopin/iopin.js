@@ -119,7 +119,7 @@ function connect() {
 		document.js.y.value = 'OKOK'
 		// Configure pin 0
 		//   Digital
-	    let ad_flags = = new Uint32Array([0x00]);
+	    let ad_flags = new Uint32Array([0x00]);
 		setPinAdConfiguration(ad_flags).then(()=>{
 			//   Output
 		    let io_flags_out = new Uint32Array([0x00]);
