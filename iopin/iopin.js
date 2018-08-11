@@ -1,5 +1,5 @@
 /* define Parameters **************************************************************/
-// BLEデバイス名接頭句 81
+// BLEデバイス名接頭句 82
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
 // micro:bit BLE IO Pin UUID
 const IOPINSERVICE_SERVICE_UUID = 'e95d127b-251d-470a-a062-fa1922dfa9a8'
@@ -90,6 +90,7 @@ function setPinAdConfiguration(ad_flags) {
     document.js.y.value = 'ad_flags'
     return characteristic.writeValue(ad_flags).then(()=>{
      document.js.y.value = 'ad_flags done'
+	    return Promise.resolve();
     });
   });
 }
@@ -103,6 +104,7 @@ function setPinIoConfiguration(io_flags_out) {
     document.js.y.value = 'io_flags_out'
     return characteristic.writeValue(io_flags_out).then(()=>{
      document.js.y.value = 'io_flags_out done'
+	    return Promise.resolve();
     });
   });
 }
