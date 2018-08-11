@@ -45,24 +45,44 @@ function StartService() {
 	  chosenIoPinService = service;
 	  return Promise.all([
 	    service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
-	      .then(handlePinDataCharacteristic),
+	      .then(handlePinDataCharacteristic1),
 	    service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
-	      .then(handlePinDataCharacteristic),
+	      .then(handlePinDataCharacteristic2),
 	    service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
-	      .then(handlePinDataCharacteristic),
+	      .then(handlePinDataCharacteristic3),
 	  ]);
 	});
      })
 }
 
-function handlePinDataCharacteristic(characteristic) {
+function handlePinDataCharacteristic1(characteristic) {
   if (characteristic === null) {
    document.js.y.value = 'Unknown'
    console.log("Unknown location.");
     return Promise.resolve();
   }
   document.js.y.value = 'OK'
-  console.log("OK.");
+  console.log("OK1.");
+  return Promise.resolve();
+}
+function handlePinDataCharacteristic2(characteristic) {
+  if (characteristic === null) {
+   document.js.y.value = 'Unknown'
+   console.log("Unknown location.");
+    return Promise.resolve();
+  }
+  document.js.y.value = 'OK'
+  console.log("OK2.");
+  return Promise.resolve();
+}
+function handlePinDataCharacteristic3(characteristic) {
+  if (characteristic === null) {
+   document.js.y.value = 'Unknown'
+   console.log("Unknown location.");
+    return Promise.resolve();
+  }
+  document.js.y.value = 'OK'
+  console.log("OK3.");
   return Promise.resolve();
 }
 
