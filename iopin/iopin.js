@@ -67,12 +67,14 @@ function connect(callback) {
 }
 
 function setPinAdConfiguration(characteristic) {
+	alert("set AD");
 	characteristic.writeValue(new Uint32Array([0x00])) // Configure pin 0 Digital
 	.catch(error => {
 		alert(error);
 	});
 }
 function setPinIoConfiguration(characteristic) {
+	alert("set IO");
 	characteristic.writeValue(new Uint32Array([0x00])) //   Output
 	.catch(error => {
 		alert(error);
@@ -81,6 +83,7 @@ function setPinIoConfiguration(characteristic) {
 
 // start service event
 function startService (characteristic) {
+	alert("start");
 	ioPinDataCharacteristic = characteristic;
 	ioPinDataCharacteristic.writeValue(new Uint8Array([0x00, 0x00]))
 	.catch(error => {
