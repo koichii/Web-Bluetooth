@@ -16,6 +16,8 @@ const MSG_DISCONNECTED = 'BLE接続を切断しました。'
 var chosenIoPinService = null;
 var connectDevice = null;
 
+console.log("start!!!")
+
 // disconnect process
 function disconnect () {
   if (!connectDevice || !connectDevice.gatt.connected)
