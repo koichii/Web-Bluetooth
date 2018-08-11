@@ -65,32 +65,28 @@ function startService (characteristic) {
 }
 
 function onChangeCheckBox() {
-  if (ledMatrixStateCharacteristic == null) {
-    return;
-  }
-
-  ledMatrixStateCharacteristic.writeValue(generateUint8Array())
-    .catch(error => {
-      showModal(error);
-    });
+	if (ledMatrixStateCharacteristic == null) {
+		return;
+	}
+	ledMatrixStateCharacteristic.writeValue(generateUint8Array())
+	.catch(error => {
+		alert(error);
+	});
 }
 
 function generateUint8Array() {
-  let array = new Uint8Array(5);
+	let array = new Uint8Array(5);
 
-  for (let row = 0; row < 5; row++) {
-    let value = 0;
+	for (let row = 0; row < 5; row++) {
+		let value = 0;
 
-    for (let index = 0; index < 5; index++) {
-      value *= 2;
-      if (document.getElementsByName("check" + row + index)[0].checked) {
-        value += 1;
-      }
-    }
-
-    array[row] = value;
-  }
-
-
-  return array;
+		for (let index = 0; index < 5; index++) {
+			value *= 2;
+			if (document.getElementsByName("check" + row + index)[0].checked) {
+				value += 1;
+			}
+		}
+		array[row] = value;
+	}
+	return array;
 }
