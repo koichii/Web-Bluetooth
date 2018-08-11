@@ -17,10 +17,12 @@ let chosenIoPinService = null;
 
 function StartService() {
 	navigator.bluetooth.requestDevice({
-	  filters: [{
-	    services: [DEVICE_NAME_PREFIX],
-	  }]
-	}).then(device => device.gatt.connect())
+	    filters: [{
+	      namePrefix: DEVICE_NAME_PREFIX
+	    }],
+	    optionalServices: [IOPINSERVICE_SERVICE_UUID]
+	})
+	.then(device => device.gatt.connect())
 	.then(server => server.getPrimaryService(IOPINSERVICE_SERVICE_UUID))
 	.then(service => {
 	  chosenIoPinService = service;
