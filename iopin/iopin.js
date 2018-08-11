@@ -68,14 +68,14 @@ function connect(callback) {
 
 function setPinAdConfiguration(characteristic) {
 	alert("set AD");
-	characteristic.writeValue(new Uint32Array([0x00])) // Configure pin 0 Digital
+	characteristic.writeValue(new Uint32Array([0x02])) // Configure pin 0 Digital, pin 1 Analog
 	.catch(error => {
 		alert(error);
 	});
 }
 function setPinIoConfiguration(characteristic) {
 	alert("set IO");
-	characteristic.writeValue(new Uint32Array([0x00])) //   Output
+	characteristic.writeValue(new Uint32Array([0x02])) //   pin 0 Output, pin 1 Input
 	.catch(error => {
 		alert(error);
 	});
