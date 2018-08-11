@@ -81,12 +81,17 @@ function setPinIoConfiguration(characteristic) {
 	});
 }
 
+var valueCallback = null;
+function setValueCallback(cb) {
+	valueCallback = cb;
+}
+
 function handleCharacteristicValueChanged(event) {
 	let value = event.target.value.getUint8(1);
 	console.log(value);
 	document.js.x.value = value
-	if (gauge) {
-		gauge.set(value);
+	if (valueCallback) {
+		valueCallback(value);
 	}
 }
 	 
