@@ -42,13 +42,13 @@ function connect () {
 			.then(startService)
 			.catch(error => {
 				console.log(error)
-				alert(MSG_CONNECT_ERROR)
+				alert(error)
 			})
 		})
 	})
 	.catch(error => {
 		console.log(error)
-		alert(MSG_CONNECT_ERROR)
+		alert(error)
 	})
 }
 
