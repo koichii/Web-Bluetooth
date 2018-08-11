@@ -17,17 +17,18 @@ var chosenIoPinService = null;
 var connectDevice = null;
 
 console.log("start!!!")
-document.js.x.value = 'start'
 
 // disconnect process
 function disconnect () {
-  if (!connectDevice || !connectDevice.gatt.connected)
+  document.js.x.value = 'disconnect'
+	if (!connectDevice || !connectDevice.gatt.connected)
 	  return
   connectDevice.gatt.disconnect()
   alert(MSG_DISCONNECTED)
 }
 
 function StartService() {
+  document.js.x.value = 'start'
 	navigator.bluetooth.requestDevice({
 	    filters: [{
 	      namePrefix: DEVICE_NAME_PREFIX
@@ -35,7 +36,8 @@ function StartService() {
 	    optionalServices: [IOPINSERVICE_SERVICE_UUID]
 	})
 	.then(device => {
-	      connectDevice = device
+			document.js.x.value = 'device'
+      connectDevice = device
 	      device.gatt.connect()
 	})
 	.then(server => server.getPrimaryService(IOPINSERVICE_SERVICE_UUID))
