@@ -92,14 +92,14 @@ function setPinIoConfiguration(io_flags_out) {
   });
 }
 
-function setPinIoConfiguration(pinio) {
+function setPinData(pindata) {
   if (!chosenIoPinService) {
     return Promise.reject(new Error('No service selected yet.'));
   }
   return chosenIoPinService.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
   .then(characteristic => {
-    document.js.z.value = 'pinio'
-    return characteristic.writeValue(pinio);
+    document.js.z.value = pindata
+    return characteristic.writeValue(pindata);
   });
 }
 
@@ -118,9 +118,9 @@ function connect() {
 
 function ledOn() {
     let switch_on_pin_0 = new Uint8Array([0x00, 0x01])
-	setPinIoConfiguration(switch_on_pin_0)
+	setPinData(switch_on_pin_0)
 }
 function ledOff() {
     let switch_off_pin_0 = new Uint8Array([0x00, 0x00])
-	setPinIoConfiguration(switch_off_pin_0)
+	setPinData(switch_off_pin_0)
 }
