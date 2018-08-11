@@ -1,3 +1,4 @@
+var gauge = null;
 (window.onload = function() {
 	var opts = {
 	  angle: 0.15, // The span of the gauge arc
@@ -18,11 +19,11 @@
 
 	};
 	var target = document.getElementById('foo'); // your canvas element
-	var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-	gauge.maxValue = 3000; // set max gauge value
+	gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+	gauge.maxValue = 1024; // set max gauge value
 	gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
 	gauge.animationSpeed = 32; // set animation speed (32 is default value)
-	gauge.set(1150); // set actual value
+	gauge.set(126); // set actual value
 })();
 
 /* define Parameters **************************************************************/
@@ -112,7 +113,9 @@ function handleCharacteristicValueChanged(event) {
 	let value = event.target.value.getUint8(1);
 	console.log(value);
 	document.js.x.value = value
-	gauge.set(value);
+	if (gauge) {
+		gauge.set(value);
+	}
 }
 	 
 // start service event
