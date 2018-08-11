@@ -15,23 +15,25 @@ const MSG_DISCONNECTED = 'BLE接続を切断しました。'
 
 let chosenIoPinService = null;
 
-navigator.bluetooth.requestDevice({
-  filters: [{
-    services: [DEVICE_NAME_PREFIX],
-  }]
-}).then(device => device.gatt.connect())
-.then(server => server.getPrimaryService(IOPINSERVICE_SERVICE_UUID))
-.then(service => {
-  chosenIoPinService = service;
-  return Promise.all([
-    service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
-      .then(handlePinDataCharacteristic),
-    service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
-      .then(handlePinDataCharacteristic),
-    service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
-      .then(handlePinDataCharacteristic),
-  ]);
-});
+function StartService() {
+	navigator.bluetooth.requestDevice({
+	  filters: [{
+	    services: [DEVICE_NAME_PREFIX],
+	  }]
+	}).then(device => device.gatt.connect())
+	.then(server => server.getPrimaryService(IOPINSERVICE_SERVICE_UUID))
+	.then(service => {
+	  chosenIoPinService = service;
+	  return Promise.all([
+	    service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
+	      .then(handlePinDataCharacteristic),
+	    service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
+	      .then(handlePinDataCharacteristic),
+	    service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
+	      .then(handlePinDataCharacteristic),
+	  ]);
+	});
+}
 
 function handlePinDataCharacteristic(characteristic) {
   if (characteristic === null) {
@@ -72,13 +74,16 @@ function setPinIoConfiguration(pinio) {
 }
 
 function connect() {
-	// Configure pin 0
-	//   Digital
-    let ad_flags = new Uint8Array([0x00]);
-	setPinAdConfiguration(ad_flags)
-	//   Output
-    let io_flags_out = new Uint8Array([0x00]);
-	setPinIoConfiguration(io_flags_out)
+	StartService()
+	.then(()=> {
+		// Configure pin 0
+		//   Digital
+	    let ad_flags = new Uint8Array([0x00]);
+		setPinAdConfiguration(ad_flags)
+		//   Output
+	    let io_flags_out = new Uint8Array([0x00]);
+		setPinIoConfiguration(io_flags_out)
+	});
 }
 
 function ledOn() {
