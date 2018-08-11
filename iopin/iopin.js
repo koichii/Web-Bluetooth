@@ -13,11 +13,13 @@ const MSG_CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試し�
 const MSG_DISCONNECTED = 'BLE接続を切断しました。'
 /*********************************************************************************/
 
-let chosenIoPinService = null;
+var chosenIoPinService = null;
+var connectDevice = null;
 
 // disconnect process
 function disconnect () {
-  if (!connectDevice || !connectDevice.gatt.connected) return
+  if (!connectDevice || !connectDevice.gatt.connected)
+	  return
   connectDevice.gatt.disconnect()
   alert(MSG_DISCONNECTED)
 }
@@ -29,7 +31,10 @@ function StartService() {
 	    }],
 	    optionalServices: [IOPINSERVICE_SERVICE_UUID]
 	})
-	.then(device => device.gatt.connect())
+	.then(device => {
+	      connectDevice = device
+	      device.gatt.connect()
+	})
 	.then(server => server.getPrimaryService(IOPINSERVICE_SERVICE_UUID))
 	.then(service => {
 	  chosenIoPinService = service;
