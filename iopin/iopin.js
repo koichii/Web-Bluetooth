@@ -1,6 +1,7 @@
 /* define Parameters **************************************************************/
 // BLEデバイス名接頭句
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
+const ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8'
 // micro:bit BLE IO Pin UUID
 const IOPINSERVICE_SERVICE_UUID = 'E95D127B-251D-470A-A062-FA1922DFA9A8'
 const PINDATA_CHARACTERISTIC_UUID = 'E95D8D00-251D-470A-A062-FA1922DFA9A8'
@@ -33,15 +34,16 @@ function StartService() {
 	    filters: [{
 	      namePrefix: DEVICE_NAME_PREFIX
 	    }],
-	    optionalServices: [IOPINSERVICE_SERVICE_UUID]
+	    optionalServices: [ACCELEROMETERSERVICE_SERVICE_UUID]
 	})
 	.then(device => {
 			document.js.x.value = 'device'
       connectDevice = device
 	      device.gatt.connect()
 	})
-	.then(server => server.getPrimaryService(IOPINSERVICE_SERVICE_UUID))
+	.then(server => server.getPrimaryService(ACCELEROMETERSERVICE_SERVICE_UUID))
 	.then(service => {
+		document.js.x.value = 'service'
 	  chosenIoPinService = service;
 	  return Promise.all([
 	    service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
