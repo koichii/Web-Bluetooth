@@ -12,117 +12,80 @@ const MSG_CONNECTED = 'BLE接続が完了しました。'
 const MSG_CONNECT_ERROR = 'BLE接続に失敗しました。もう一度試してみてください'
 const MSG_DISCONNECTED = 'BLE接続を切断しました。'
 /*********************************************************************************/
-// for connection process
-const SERVICE_UUID = IOPINSERVICE_SERVICE_UUID
-const AD_CONFIG_UUID = PINADCONFIGURATION_CHARACTERISTIC_UUID
-const IO_CONFIG_UUID = PINIOCONFIGURATION_CHARACTERISTIC_UUID
-const PINDATA_UUID = PINDATA_CHARACTERISTIC_UUID
-// connected device value
-var connectDevice
 
-// disconnect process
-function disconnect () {
-  if (!connectDevice || !connectDevice.gatt.connected) return
-  connectDevice.gatt.disconnect()
-  alert(MSG_DISCONNECTED)
-  postDisconnect()
+let chosenIoPinService = null;
+
+navigator.bluetooth.requestDevice({
+  filters: [{
+    services: [DEVICE_NAME_PREFIX],
+  }]
+}).then(device => device.gatt.connect())
+.then(server => server.getPrimaryService(IOPINSERVICE_SERVICE_UUID))
+.then(service => {
+  chosenIoPinService = service;
+  return Promise.all([
+    service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
+      .then(handlePinDataCharacteristic),
+    service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
+      .then(handlePinDataCharacteristic),
+    service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
+      .then(handlePinDataCharacteristic),
+  ]);
+});
+
+function handlePinDataCharacteristic(characteristic) {
+  if (characteristic === null) {
+    console.log("Unknown location.");
+    return Promise.resolve();
+  }
+  console.log("OK.");
+  return Promise.resolve();
 }
 
-function postDisconnect () {
-  document.js.x.value = ''
-  document.js.y.value = ''
-  document.js.z.value = ''
+function setPinAdConfiguration(ad_flags) {
+  if (!chosenIoPinService) {
+    return Promise.reject(new Error('No service selected yet.'));
+  }
+  return chosenIoPinService.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
+  .then(characteristic => {
+    return characteristic.writeValue(ad_flags);
+  });
+}
+function setPinIoConfiguration(io_flags_out) {
+  if (!chosenIoPinService) {
+    return Promise.reject(new Error('No service selected yet.'));
+  }
+  return chosenIoPinService.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
+  .then(characteristic => {
+    return characteristic.writeValue(io_flags_out);
+  });
 }
 
-// connect process
-function connect () {
-  navigator.bluetooth.requestDevice({
-    filters: [{
-      namePrefix: DEVICE_NAME_PREFIX
-    }],
-    optionalServices: [SERVICE_UUID]
-  })
-    .then(device => {
-      connectDevice = device
-      console.log('device', device)
-      return device.gatt.connect()
-    })
-    .then(server => {
-      console.log('server', server)
-      server.getPrimaryService(SERVICE_UUID)
-        .then(service => {
-          // start service is here
-          setADconfig(service, AD_CONFIG_UUID)
-          setIOconfig(service, IO_CONFIG_UUID)
-          // startService(service, PINDATA_UUID) // start service
-        })
-    })
-    .catch(error => {
-      console.log(error)
-      alert(MSG_CONNECT_ERROR)
-    })
+function setPinIoConfiguration(pinio) {
+  if (!chosenIoPinService) {
+    return Promise.reject(new Error('No service selected yet.'));
+  }
+  return chosenIoPinService.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
+  .then(characteristic => {
+    return characteristic.writeValue(pinio);
+  });
 }
 
-function setADconfig (service, charUUID) {
-  var adFlag = 0x00
-  service.getCharacteristic(charUUID)
-    .then(characteristic => {
-      characteristic.writeValue(adFlag)
-    })
-    .catch(error => {
-      console.log(error)
-      alert(MSG_CONNECT_ERROR)
-    })
+function configPin() {
+	// Configure pin 0
+	//   Digital
+    let ad_flags = new Uint8Array([0x00]);
+	setPinAdConfiguration(ad_flags)
+	//   Output
+    let io_flags_out = new Uint8Array([0x00]);
+	setPinIoConfiguration(io_flags_out)
 }
 
-function setIOconfig (service, charUUID) {
-  var ioFlagOut = 0x00
-  service.getCharacteristic(charUUID)
-    .then(characteristic => {
-      characteristic.writeValue(ioFlagOut)
-    })
-    .catch(error => {
-      console.log(error)
-      alert(MSG_CONNECT_ERROR)
-    })
+function switchOn() {
+    let switch_on_pin_0 = new Uint8Array([0x00, 0x01])
+	setPinIoConfiguration(switch_on_pin_0)
 }
-
-function onLED () {
-
-}
-
-function offLED () {
-
-}
-
-// start service event
-function startService (service, charUUID) {
-  service.getCharacteristic(charUUID)
-    .then(characteristic => {
-      characteristic.startNotifications()
-        .then(char => {
-          alert(MSG_CONNECTED)
-          characteristic.addEventListener('characteristicvaluechanged',
-            // event is here
-            onAccelerometerValueChanged)
-          console.log('Accelerometer:', char)
-        })
-    })
-    .catch(error => {
-      console.log(error)
-      alert(MSG_CONNECT_ERROR)
-    })
-}
-
-// event handler
-function onAccelerometerValueChanged (event) {
-  var AcceleratorX = event.target.value.getUint16(0) / 1000.0
-  console.log('x:' + AcceleratorX)
-  document.js.x.value = AcceleratorX
-  var AcceleratorY = event.target.value.getUint16(2) / 1000.0
-  console.log('y:' + AcceleratorY)
-  document.js.y.value = AcceleratorY
-  var AcceleratorZ = event.target.value.getUint16(4) / 1000.0
-  console.log('z:' + AcceleratorZ)
-  document.js.z.value = AcceleratorZ
+function switchOff() {
+    let switch_off_pin_0 = new Uint8Array([0x00, 0x00])
+	setPinIoConfiguration(switch_off_pin_0)
 }
