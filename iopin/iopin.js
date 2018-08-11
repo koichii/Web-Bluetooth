@@ -15,6 +15,13 @@ const MSG_DISCONNECTED = 'BLE接続を切断しました。'
 
 let chosenIoPinService = null;
 
+// disconnect process
+function disconnect () {
+  if (!connectDevice || !connectDevice.gatt.connected) return
+  connectDevice.gatt.disconnect()
+  alert(MSG_DISCONNECTED)
+}
+
 function StartService() {
 	navigator.bluetooth.requestDevice({
 	    filters: [{
