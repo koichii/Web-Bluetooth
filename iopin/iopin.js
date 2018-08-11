@@ -41,13 +41,16 @@ function StartService() {
 	    optionalServices: [IOPINSERVICE_SERVICE_UUID]
 	})
 	.then(device => {
-			document.js.x.value = 'device'
-      connectDevice = device
-	      device.gatt.connect()
+	  document.js.x.value = 'device'
+	  connectDevice = device
+	  device.gatt.connect()
 	})
-	.then(server => server.getPrimaryService(IOPINSERVICE_SERVICE_UUID))
+	.then(server => {
+	  document.js.x.value = 'server'
+	  server.getPrimaryService(IOPINSERVICE_SERVICE_UUID)
+	})
 	.then(service => {
-		document.js.x.value = 'service'
+	  document.js.x.value = 'service'
 	  chosenIoPinService = service;
 	  return Promise.all([
 	    service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
