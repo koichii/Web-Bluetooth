@@ -26,7 +26,7 @@ function disconnect () {
 	alert(MSG_DISCONNECTED)
 }
 
-function connect(callback) {
+function connect() {
 	navigator.bluetooth.requestDevice({
 		filters: [{
 			namePrefix: DEVICE_NAME_PREFIX
@@ -34,35 +34,20 @@ function connect(callback) {
 	})
 	.then(device => {
 		connectDevice = device
-		device.gatt.connect()
-		.then(server => {
-			server.getPrimaryService(IOPINSERVICE_SERVICE_UUID)
-			.then(service => {
-				//chosenService = service;
-				service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
-				.then(setPinAdConfiguration)
-				.catch(error => {
-					console.log(error)
-					alert(error)
-				})
-				service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
-				.then(setPinIoConfiguration)
-				.catch(error => {
-					console.log(error)
-					alert(error)
-				})
-				service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
-				.then(startService)
-				.catch(error => {
-					console.log(error)
-					alert(error)
-				})
-			})
-		})
-		.catch(error => {
-			console.log(error)
-			alert(error)
-		})
+		return device.gatt.connect()
+	.then(server => {
+		return server.getPrimaryService(IOPINSERVICE_SERVICE_UUID)
+	.then(service => {
+		service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
+			.then(setPinAdConfiguration)
+		service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
+			.then(setPinIoConfiguration)
+		service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
+			.then(startService)
+	})
+	.catch(error => {
+		console.log(error)
+		alert(error)
 	})
 }
 
