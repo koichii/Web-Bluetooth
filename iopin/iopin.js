@@ -25,7 +25,7 @@ function disconnect () {
   alert(MSG_DISCONNECTED)
 }
 
-function StartService() {
+function StartService(callback) {
   document.js.x.value = 'start'
 	navigator.bluetooth.requestDevice({
 	    filters: [{
@@ -43,6 +43,7 @@ function StartService() {
 	.then(service => {
 	  document.js.x.value = 'service'
 	  chosenIoPinService = service;
+	  callback(service);
 	  return Promise.all([
 	    service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
 	      .then(handlePinDataCharacteristic1),
@@ -118,8 +119,7 @@ function setPinData(pindata) {
 }
 
 function connect() {
-	StartService()
-	.then(()=> {
+	StartService(function () {
 		document.js.y.value = 'OKOK'
 		// Configure pin 0
 		//   Digital
