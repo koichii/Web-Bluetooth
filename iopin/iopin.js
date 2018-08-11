@@ -91,6 +91,7 @@ function handleCharacteristicValueChanged(event) {
 	let value = event.target.value.getUint8(1);
 	console.log(value);
 	document.js.x.value = value;
+	document.js.y.value = event.target.value.getUint8(0);
 	if (valueCallback) {
 		valueCallback(value);
 	}
