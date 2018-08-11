@@ -90,7 +90,7 @@ function setValueCallback(cb) {
 function handleCharacteristicValueChanged(event) {
 	let value = event.target.value.getUint8(1);
 	console.log(value);
-	let v2 = value - 25;
+	let v2 = value + 25;
 	document.js.x.value = v2 / 100;
 	if (valueCallback) {
 		valueCallback(v2);
