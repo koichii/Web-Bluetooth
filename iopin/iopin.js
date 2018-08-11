@@ -81,9 +81,17 @@ function setPinIoConfiguration(characteristic) {
 	});
 }
 
+function handleCharacteristicValueChanged(event) {
+	let value = event.target.value.getUint8(1);
+	console.log(value);
+}
+	 
 // start service event
 function startService (characteristic) {
 	alert("start");
+	characteristic.startNotifications();
+        characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
+	
 	ioPinDataCharacteristic = characteristic;
 	ioPinDataCharacteristic.writeValue(new Uint8Array([0x00, 0x00]))
 	.catch(error => {
