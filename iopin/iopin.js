@@ -1,5 +1,5 @@
 /* define Parameters **************************************************************/
-// BLEデバイス名接頭句 555
+// BLEデバイス名接頭句 666
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
 // micro:bit BLE IO Pin UUID
 const IOPINSERVICE_SERVICE_UUID = 'e95d127b-251d-470a-a062-fa1922dfa9a8'
@@ -47,10 +47,6 @@ function StartService(callback) {
 	  return Promise.all([
 	    service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
 	      .then(handlePinDataCharacteristic1),
-	    service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
-	      .then(handlePinDataCharacteristic2),
-	    service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
-	      .then(handlePinDataCharacteristic3),
 	  ]);
 	});
      })
@@ -62,7 +58,7 @@ function handlePinDataCharacteristic1(characteristic) {
    console.log("Unknown location.");
     return Promise.resolve();
   }
-  document.js.y.value = 'OK1'
+  document.js.x.value = 'OK1'
   return Promise.resolve();
 }
 function handlePinDataCharacteristic2(characteristic) {
