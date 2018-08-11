@@ -15,7 +15,8 @@ Android の Chrome ブラウザで動作テスト
 [IO ピン ソース](./iopin/iopin.js)
 
 ### マイクロビットのプログラムソース
-```microbit.js
+
+```javascript
 bluetooth.onBluetoothConnected(() => {
     basic.showIcon(IconNames.Diamond)
 })
