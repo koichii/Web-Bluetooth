@@ -89,12 +89,12 @@ function setValueCallback(cb) {
 // 500 126 1.51 v
 function handleCharacteristicValueChanged(event) {
 	let value = event.target.value.getUint8(1);
-	let v2 = int(value * 4 * 0.03) * 10
-	console.log(value);
-	document.js.x.value = v2 / 100;
+	//let v2 = int(value * 4 * 0.03) * 10
+	//console.log(value);
+	document.js.x.value = value; //v2 / 100;
 	//document.js.y.value = event.target.value.getUint8(0);
 	if (valueCallback) {
-		valueCallback(v2);
+		valueCallback(value);
 	}
 }
 	 
