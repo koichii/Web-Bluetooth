@@ -85,15 +85,14 @@ var valueCallback = null;
 function setValueCallback(cb) {
 	valueCallback = cb;
 }
-// 244 2.82 v
-// 126 1.51 v
+// 973 2.82 v
+// 500 1.51 v
 function handleCharacteristicValueChanged(event) {
 	let value = event.target.value.getUint8(1);
 	console.log(value);
-	let v2 = value + 25;
-	document.js.x.value = v2 / 100;
+	document.js.x.value = value;
 	if (valueCallback) {
-		valueCallback(v2);
+		valueCallback(value);
 	}
 }
 	 
