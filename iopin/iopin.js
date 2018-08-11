@@ -21,8 +21,6 @@ const MSG_DISCONNECTED = 'BLE接続を切断しました。'
 var chosenIoPinService = null;
 var connectDevice = null;
 
-console.log("start!!!")
-
 // disconnect process
 function disconnect () {
   document.js.x.value = 'disconnect'
@@ -79,6 +77,7 @@ function setPinAdConfiguration(ad_flags) {
   }
   return chosenIoPinService.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
   .then(characteristic => {
+    document.js.y.value = 'ad_flags'
     return characteristic.writeValue(ad_flags);
   });
 }
@@ -88,6 +87,7 @@ function setPinIoConfiguration(io_flags_out) {
   }
   return chosenIoPinService.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
   .then(characteristic => {
+    document.js.y.value = 'io_flags_out'
     return characteristic.writeValue(io_flags_out);
   });
 }
@@ -98,6 +98,7 @@ function setPinIoConfiguration(pinio) {
   }
   return chosenIoPinService.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
   .then(characteristic => {
+    document.js.z.value = 'pinio'
     return characteristic.writeValue(pinio);
   });
 }
