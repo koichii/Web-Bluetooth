@@ -37,8 +37,7 @@ function StartService() {
 	navigator.bluetooth.requestDevice({
 	    filters: [{
 	      namePrefix: DEVICE_NAME_PREFIX
-	    }],
-	    optionalServices: [IOPINSERVICE_SERVICE_UUID]
+	    }]
 	})
 	.then(device => {
 	  document.js.x.value = 'device'
