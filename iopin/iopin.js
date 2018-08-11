@@ -1,7 +1,7 @@
 /* define Parameters **************************************************************/
 // BLEデバイス名接頭句
 const DEVICE_NAME_PREFIX = 'BBC micro:bit'
-const ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8'
+//const ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8'
 // micro:bit BLE IO Pin UUID
 //const IOPINSERVICE_SERVICE_UUID = 'E95D127B-251D-470A-A062-FA1922DFA9A8'
 //const PINDATA_CHARACTERISTIC_UUID = 'E95D8D00-251D-470A-A062-FA1922DFA9A8'
@@ -46,7 +46,7 @@ function StartService() {
 	})
 	.then(server => {
 	  document.js.x.value = 'server'
-	  server.getPrimaryService(ACCELEROMETERSERVICE_SERVICE_UUID)
+	  server.getPrimaryService(IOPINSERVICE_SERVICE_UUID)
 	.then(service => {
 	  document.js.x.value = 'service'
 	  chosenIoPinService = service;
@@ -64,9 +64,11 @@ function StartService() {
 
 function handlePinDataCharacteristic(characteristic) {
   if (characteristic === null) {
-    console.log("Unknown location.");
+   document.js.y.value = 'Unknown'
+   console.log("Unknown location.");
     return Promise.resolve();
   }
+  document.js.y.value = 'OK'
   console.log("OK.");
   return Promise.resolve();
 }
