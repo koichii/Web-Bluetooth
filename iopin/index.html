@@ -16,12 +16,11 @@ micro:bit BLE
 <input type="button" value="ON" onclick="ledOn();"/><br /><br />
 <input type="button" value="OFF" onclick="ledOff();"/><br /><br />
 <input type="button" value="切断" onclick="disconnect();" /><br /><br />
-  加速度センサー値<br />
- X=<input type="text" name="x" value="" />/
- Y=<input type="text" name="y" value="" />/
- Z=<input type="text" name="z" value="" />
+
+値=<input type="text" name="x" value="" />
+
 </form>
-  <canvas id="foo" width="240" height="320"></canvas>
+  <canvas id="foo" width="380" height="150"></canvas>
 
 <script>
 (window.onload = function() {
@@ -44,13 +43,13 @@ micro:bit BLE
 
 	};
 	var target = document.getElementById('foo'); // your canvas element
-  var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-	gauge.maxValue = 1024; // set max gauge value
+	var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+	gauge.maxValue = 350; // set max gauge value
 	gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
 	gauge.animationSpeed = 32; // set animation speed (32 is default value)
-  setValueCallback(value =>{
-    gauge.set(value); // set actual value
-  });
+	setValueCallback(value =>{
+		gauge.set(value); // set actual value
+	});
 })();
 </script>
   
