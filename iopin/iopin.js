@@ -40,10 +40,8 @@ function connect() {
 		return server.getPrimaryService(IOPINSERVICE_SERVICE_UUID)
 	})
 	.then(service => {
-		(() => {
-			return service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
-			.then(setPinAdConfiguration)
-		})()
+		service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
+		.then(setPinAdConfiguration)
 		.then(() => {
 			return service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
 			.then(setPinIoConfiguration)
@@ -62,14 +60,6 @@ function connect() {
 function setPinAdConfiguration(characteristic) {
 	//alert("set AD");
 	return characteristic.writeValue(new Uint32Array([0x02])) // Configure pin 0 Digital, pin 1 Analog
-/*
-	.then(() => {
-		alert("done");
-	})
-	.catch(error => {
-		alert(error);
-	});
-*/
 }
 function setPinIoConfiguration(characteristic) {
 	//alert("set IO");
@@ -95,19 +85,17 @@ function startService (characteristic) {
 		if (microbit.valueCallback) {
 			microbit.valueCallback(pin, value);
 		}
+	})
+	.then(() => {
+		//alert("start2");
+		microbit.handleWriteValue = characteristic;
+		return setPinValue(0x00, 0x00) // P0 = 0
 	});
-
-	//alert("start2");
-	microbit.handleWriteValue = characteristic;
-	setPinValue(0x00, 0x00) // P0 = 0
 }
 
 function setPinValue(pin, value) {
 	if (!microbit.handleWriteValue) {
-		return;
+		return Promise.reject('oh, no!');
 	}
-	microbit.handleWriteValue.writeValue(new Uint8Array([pin, value]))
-	.catch(error => {
-		alert(error);
-	});
+	return microbit.handleWriteValue.writeValue(new Uint8Array([pin, value]))
 }
