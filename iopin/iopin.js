@@ -77,20 +77,19 @@ function registerCallback(callback) {
 	 
 // start service event
 function startService (characteristic) {
-	//alert("start");
-	characteristic.startNotifications();
-	characteristic.addEventListener('characteristicvaluechanged', (event) => {
-		let pin = event.target.value.getUint8(0)
-		let value = event.target.value.getUint8(1)
-		if (microbit.valueCallback) {
-			microbit.valueCallback(pin, value);
-		}
-	})
+	microbit.handleWriteValue = characteristic;
+	retrun setPinValue(0x00, 0x00) // P0 = 0
 	.then(() => {
-		alert("start2");
-		microbit.handleWriteValue = characteristic;
-		return setPinValue(0x00, 0x00) // P0 = 0
-	});
+		alert("start");
+		characteristic.startNotifications();
+		characteristic.addEventListener('characteristicvaluechanged', (event) => {
+			let pin = event.target.value.getUint8(0)
+			let value = event.target.value.getUint8(1)
+			if (microbit.valueCallback) {
+				microbit.valueCallback(pin, value);
+			}
+		})
+	})
 }
 
 function setPinValue(pin, value) {
