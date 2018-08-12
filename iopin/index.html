@@ -23,9 +23,10 @@ micro:bit BLE
   <canvas id="foo" width="380" height="150"></canvas>
 
 <script>
-window.onerror = function(msg, url, line, col, error) {  
-	alert(msg + ' # at ' + url + ' - ' + line); // エラーの内容
-};
+	window.onerror = function (msg, file, line, column, err) {
+		alert(msg + file + ':' + line);
+	};
+
 (window.onload = function() {
 	var opts = {
 	  angle: 0.15, // The span of the gauge arc
@@ -62,7 +63,7 @@ window.onerror = function(msg, url, line, col, error) {
 	
 function ledOn() {
 	setPinValue(0x00, 0x01) // P0 = 1
-	abc = 8 error
+	abc = 8
 }
 
 function ledOff() {
