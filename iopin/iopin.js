@@ -41,11 +41,15 @@ function connect() {
 	})
 	.then(service => {
 		service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
-			.then(setPinAdConfiguration)
-		service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
+		.then(return setPinAdConfiguration)
+		.then(() => {
+			return service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
 			.then(setPinIoConfiguration)
-		service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
+		})
+		.then(() => {
+			return service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
 			.then(startService)
+		})
 	})
 	.catch(error => {
 		console.log(error)
