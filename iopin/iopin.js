@@ -81,7 +81,7 @@ function registerCallback(callback) {
 function startService (characteristic) {
 	alert("start");
 	characteristic.startNotifications();
-	characteristic.addEventListener('characteristicvaluechanged', () => {
+	characteristic.addEventListener('characteristicvaluechanged', (event) => {
 		let pin = event.target.value.getUint8(0)
 		let value = event.target.value.getUint8(1)
 		if (microbit.valueCallback) {
