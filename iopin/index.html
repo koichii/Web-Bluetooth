@@ -49,11 +49,25 @@ micro:bit BLE
 	gauge.maxValue = 350; // set max gauge value
 	gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
 	gauge.animationSpeed = 128; // set animation speed (32 is default value)
-	setValueCallback(value =>{
-		gauge.set(value); // set actual value
+
+	// 973 243 2.82 v
+	// 500 126 1.51 v
+	registerCallback((pin, value) =>{
+		let value2 = int(value * 4 * 0.03) * 10
+		document.js.x.value = value2 / 100;
+		gauge.set(value2); // set actual value
 	});
 })();
-</script>
+	
+function ledOn() {
+	setPinValue(0x00, 0x01) // P0 = 1
+}
+
+function ledOff() {
+	setPinValue(0x00, 0x00) // P0 = 0
+}
+	
+	</script>
   
   </body>
 </html>
