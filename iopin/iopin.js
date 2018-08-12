@@ -78,7 +78,7 @@ function registerCallback(callback) {
 // start service event
 function startService (characteristic) {
 	microbit.handleWriteValue = characteristic;
-	retrun setPinValue(0x00, 0x00) // P0 = 0
+	return setPinValue(0x00, 0x00) // P0 = 0
 	.then(() => {
 		alert("start");
 		characteristic.startNotifications();
