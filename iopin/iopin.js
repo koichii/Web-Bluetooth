@@ -68,9 +68,13 @@ function setPinIoConfiguration(characteristic) {
 	});
 }
 
-var valueCallback = null;
-function setValueCallback(cb) {
-	valueCallback = cb;
+var microbit = {} // microbit object
+microbit.valueCallback = null	// event handler for value change
+microbit.handleWriteValue = null
+
+// Register callback function
+function setValueCallback(callback) {
+	microbit.valueCallback = callback;
 }
 // 973 243 2.82 v
 // 500 126 1.51 v
@@ -80,8 +84,8 @@ function handleCharacteristicValueChanged(event) {
 	//console.log(value);
 	document.js.x.value = value; //v2 / 100;
 	//document.js.y.value = event.target.value.getUint8(0);
-	if (valueCallback) {
-		valueCallback(value);
+	if (microbit.valueCallback) {
+		microbit.valueCallback(value);
 	}
 }
 	 
@@ -89,33 +93,34 @@ function handleCharacteristicValueChanged(event) {
 function startService (characteristic) {
 	alert("start");
 	characteristic.startNotifications();
-        characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
+        characteristic.addEventListener('characteristicvaluechanged', () => {
+		let pin = event.target.value.getUint8(0)
+		let value = event.target.value.getUint8(1)
+		if (microbit.valueCallback) {
+			microbit.valueCallback(value);
+		}
+	});
 
 	alert("start2");
-	ioPinDataCharacteristic = characteristic;
-	ioPinDataCharacteristic.writeValue(new Uint8Array([0x00, 0x00]))
+	microbit.handleWriteValue = characteristic;
+	setPinValue(0x00, 0x01) // P0 = 1
+}
+
+function setPinValue(pin, value) {
+	if (!microbit.handleWriteValue) {
+		return;
+	}
+	microbit.handleWriteValue.writeValue(new Uint8Array([pin, value]))
 	.catch(error => {
 		alert(error);
 	});
 }
 
 function ledOn() {
-	if (ioPinDataCharacteristic == null) {
-		return;
-	}
-	ioPinDataCharacteristic.writeValue(new Uint8Array([0x00, 0x01]))
-	.catch(error => {
-		alert(error);
-	});
+	setPinValue(0x00, 0x01) // P0 = 1
 }
 
 function ledOff() {
-	if (ioPinDataCharacteristic == null) {
-		return;
-	}
-	ioPinDataCharacteristic.writeValue(new Uint8Array([0x00, 0x00]))
-	.catch(error => {
-		alert(error);
-	});
+	setPinValue(0x00, 0x00) // P0 = 0
 }
 
