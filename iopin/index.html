@@ -8,19 +8,22 @@
 </head>
 
 <body>
-  <h1> Welcome to IO Pin </h1>  
-  
+	<h1> マイクロビット テスター</h1>	
+	
 <form name="js">
-micro:bit BLE
-<input type="button" value="接続" onclick="connect();"/><br /><br />
-<input type="button" value="ON" onclick="ledOn();"/><br /><br />
-<input type="button" value="OFF" onclick="ledOff();"/><br /><br />
-<input type="button" value="切断" onclick="disconnect();" /><br /><br />
+	<h2>micro:bit BLE</h2>
+	<input type="button" value="接続" onclick="connect();"/><br /><br />
+	<input type="button" value="切断" onclick="disconnect();" /><br /><br />
 
-値=<input type="text" name="x" value="" />
+	<h2>P0 出力</h2>
+
+	<input type="button" value="ON" onclick="ledOn();"/><br /><br />
+	<input type="button" value="OFF" onclick="ledOff();"/><br /><br />
+
+	値=<input type="text" name="x" value="" />
 
 </form>
-  <canvas id="foo" width="380" height="150"></canvas>
+<canvas id="foo" width="380" height="150"></canvas>
 
 <script>
 	window.onerror = function (msg, file, line, column, err) {
@@ -29,27 +32,27 @@ micro:bit BLE
 
 (window.onload = function() {
 	var opts = {
-	  angle: 0.15, // The span of the gauge arc
-	  lineWidth: 0.44, // The line thickness
-	  radiusScale: 1, // Relative radius
-	  pointer: {
-	    length: 0.6, // // Relative to gauge radius
-	    strokeWidth: 0.035, // The thickness
-	    color: '#000000' // Fill color
-	  },
-	  limitMax: false,     // If false, max value increases automatically if value > maxValue
-	  limitMin: false,     // If true, the min value of the gauge will be fixed
-	  colorStart: '#6FADCF',   // Colors
-	  colorStop: '#8FC0DA',    // just experiment with them
-	  strokeColor: '#E0E0E0',  // to see which ones work best for you
-	  generateGradient: true,
-	  highDpiSupport: true,     // High resolution support
+		angle: 0.15, // The span of the gauge arc
+		lineWidth: 0.44, // The line thickness
+		radiusScale: 1, // Relative radius
+		pointer: {
+			length: 0.6, // // Relative to gauge radius
+			strokeWidth: 0.035, // The thickness
+			color: '#000000' // Fill color
+		},
+		limitMax: false,		 // If false, max value increases automatically if value > maxValue
+		limitMin: false,		 // If true, the min value of the gauge will be fixed
+		colorStart: '#6FADCF',	 // Colors
+		colorStop: '#8FC0DA',		// just experiment with them
+		strokeColor: '#E0E0E0',	// to see which ones work best for you
+		generateGradient: true,
+		highDpiSupport: true,		 // High resolution support
 
 	};
 	var target = document.getElementById('foo'); // your canvas element
 	var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
 	gauge.maxValue = 350; // set max gauge value
-	gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+	gauge.setMinValue(0);	// Prefer setter over gauge.minValue = 0
 	gauge.animationSpeed = 128; // set animation speed (32 is default value)
 
 	// 973 243 2.82 v
@@ -69,7 +72,6 @@ function ledOff() {
 	setPinValue(0x00, 0x00) // P0 = 0
 }
 	
-	</script>
-  
-  </body>
+</script>
+</body>
 </html>
