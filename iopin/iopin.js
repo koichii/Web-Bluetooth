@@ -30,7 +30,8 @@ function connect() {
 	navigator.bluetooth.requestDevice({
 		filters: [{
 			namePrefix: DEVICE_NAME_PREFIX
-		}]
+		}],
+		optionalServices: [IOPINSERVICE_SERVICE_UUID] // to avoid Security Error
 	})
 	.then(device => {
 		connectDevice = device
