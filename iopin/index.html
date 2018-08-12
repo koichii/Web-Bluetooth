@@ -8,19 +8,16 @@
 </head>
 
 <body>
-	<h1> マイクロビット テスター</h1>	
 	
 <form name="js">
 	<h2>micro:bit BLE</h2>
-	<input type="button" value="接続" onclick="connect();"/><br /><br />
-	<input type="button" value="切断" onclick="disconnect();" /><br /><br />
-
+	<input type="button" value="接続" onclick="connect();"/>   <input type="button" value="切断" onclick="disconnect();" />
+	
 	<h2>P0 出力</h2>
+	<input type="button" value="ON" onclick="ledOn();"/> 	<input type="button" value="OFF" onclick="ledOff();"/>
 
-	<input type="button" value="ON" onclick="ledOn();"/><br /><br />
-	<input type="button" value="OFF" onclick="ledOff();"/><br /><br />
-
-	値=<input type="text" name="x" value="" />
+	<h2> マイクロビット テスター</h2>
+	P2 値=<input type="text" name="x" value="" />
 
 </form>
 <canvas id="foo" width="380" height="150"></canvas>
