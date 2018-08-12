@@ -40,8 +40,10 @@ function connect() {
 		return server.getPrimaryService(IOPINSERVICE_SERVICE_UUID)
 	})
 	.then(service => {
-		service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
-		.then(return setPinAdConfiguration)
+		(() => {
+			return service.getCharacteristic(PINADCONFIGURATION_CHARACTERISTIC_UUID)
+			.then(setPinAdConfiguration)
+		})()
 		.then(() => {
 			return service.getCharacteristic(PINIOCONFIGURATION_CHARACTERISTIC_UUID)
 			.then(setPinIoConfiguration)
