@@ -87,7 +87,7 @@ function startService (characteristic) {
 		}
 	})
 	.then(() => {
-		//alert("start2");
+		alert("start2");
 		microbit.handleWriteValue = characteristic;
 		return setPinValue(0x00, 0x00) // P0 = 0
 	});
