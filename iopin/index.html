@@ -55,7 +55,7 @@ micro:bit BLE
 	// 973 243 2.82 v
 	// 500 126 1.51 v
 	registerCallback((pin, value) =>{
-		let value2 = int(value * 4 * 0.03) * 10
+		let value2 = Math.round(value * 4 * 0.03) * 10
 		document.js.x.value = value2 / 100;
 		gauge.set(value2); // set actual value
 	});
