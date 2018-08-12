@@ -73,20 +73,8 @@ microbit.valueCallback = null	// event handler for value change
 microbit.handleWriteValue = null
 
 // Register callback function
-function setValueCallback(callback) {
+function registerCallback(callback) {
 	microbit.valueCallback = callback;
-}
-// 973 243 2.82 v
-// 500 126 1.51 v
-function handleCharacteristicValueChanged(event) {
-	let value = event.target.value.getUint8(1);
-	//let v2 = int(value * 4 * 0.03) * 10
-	//console.log(value);
-	document.js.x.value = value; //v2 / 100;
-	//document.js.y.value = event.target.value.getUint8(0);
-	if (microbit.valueCallback) {
-		microbit.valueCallback(value);
-	}
 }
 	 
 // start service event
@@ -97,7 +85,7 @@ function startService (characteristic) {
 		let pin = event.target.value.getUint8(0)
 		let value = event.target.value.getUint8(1)
 		if (microbit.valueCallback) {
-			microbit.valueCallback(value);
+			microbit.valueCallback(pin, value);
 		}
 	});
 
@@ -115,12 +103,3 @@ function setPinValue(pin, value) {
 		alert(error);
 	});
 }
-
-function ledOn() {
-	setPinValue(0x00, 0x01) // P0 = 1
-}
-
-function ledOff() {
-	setPinValue(0x00, 0x00) // P0 = 0
-}
-
