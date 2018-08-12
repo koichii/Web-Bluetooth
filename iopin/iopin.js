@@ -60,7 +60,7 @@ function connect() {
 }
 
 function setPinAdConfiguration(characteristic) {
-	alert("set AD");
+	//alert("set AD");
 	return characteristic.writeValue(new Uint32Array([0x02])) // Configure pin 0 Digital, pin 1 Analog
 /*
 	.then(() => {
@@ -72,7 +72,7 @@ function setPinAdConfiguration(characteristic) {
 */
 }
 function setPinIoConfiguration(characteristic) {
-	alert("set IO");
+	//alert("set IO");
 	return characteristic.writeValue(new Uint32Array([0x02])) //   pin 0 Output, pin 1 Input
 }
 
@@ -87,7 +87,7 @@ function registerCallback(callback) {
 	 
 // start service event
 function startService (characteristic) {
-	alert("start");
+	//alert("start");
 	characteristic.startNotifications();
 	characteristic.addEventListener('characteristicvaluechanged', (event) => {
 		let pin = event.target.value.getUint8(0)
