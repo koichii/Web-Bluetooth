@@ -14,7 +14,8 @@
 	<input type="button" value="接続" onclick="connect();"/>   <input type="button" value="切断" onclick="disconnect();" />
 	
 	<h2>P0 出力</h2>
-	<input type="button" value="ON" onclick="ledOn();"/> 	<input type="button" value="OFF" onclick="ledOff();"/>
+	<input type="button" value="ON"  onclick="setPinValue(0x00, 0x01);"/> P0 = 1 
+	<input type="button" value="OFF" onclick="setPinValue(0x00, 0x00);"/> P0 = 0
 
 	<h2> マイクロビット テスター</h2>
 	P2 値=<input type="text" name="x" value="" />
@@ -60,14 +61,6 @@
 		gauge.set(value2); // set actual value
 	});
 })();
-	
-function ledOn() {
-	setPinValue(0x00, 0x01) // P0 = 1
-}
-
-function ledOff() {
-	setPinValue(0x00, 0x00) // P0 = 0
-}
 	
 </script>
 </body>
