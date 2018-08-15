@@ -60,7 +60,8 @@
 	registerCallback((pin, value) =>{
 		document.js.p.value = pin;
 		document.js.v.value = value;
-		let value2 = Math.round(value * 4 * 0.03) * 10
+		// 現在の電源電圧を3.0vとする
+		let value2 = Math.round(value * 4 /1024 * 3.00 /10) * 10
 		document.js.x.value = value2 / 100;
 		gauge.set(value2); // set actual value
 	});
