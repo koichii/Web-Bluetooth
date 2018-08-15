@@ -82,7 +82,7 @@ function startService (characteristic) {
 	microbit.handleWriteValue = characteristic;
 	return setPinValue(0x00, 0x00) // P0 = 0
 	.then(() => {
-		//alert("start");
+		alert("start");
 		characteristic.startNotifications();
 		characteristic.addEventListener('characteristicvaluechanged', (event) => {
 			let pin = event.target.value.getUint8(0)
