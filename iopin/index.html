@@ -18,7 +18,9 @@
 	<input type="button" value="OFF" onclick="setPinValue(0x00, 0x00);"/> P0 = 0
 
 	<h2> マイクロビット テスター</h2>
-	P2 値=<input type="text" name="x" value="" />
+	Pin = <input type="text" name="p" value="" />
+	value = <input type="text" name="v" value="" />
+	P2 値 =<input type="text" name="x" value="" />
 
 </form>
 <canvas id="foo" width="380" height="150"></canvas>
@@ -56,6 +58,8 @@
 	// 973 243 2.82 v
 	// 500 126 1.51 v
 	registerCallback((pin, value) =>{
+		document.js.p.value = pin;
+		document.js.v.value = value;
 		let value2 = Math.round(value * 4 * 0.03) * 10
 		document.js.x.value = value2 / 100;
 		gauge.set(value2); // set actual value
