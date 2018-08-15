@@ -60,11 +60,11 @@ function connect() {
 }
 
 function setPinAdConfiguration(characteristic) {
-	alert("set AD");
+	//alert("set AD");
 	return characteristic.writeValue(new Uint32Array([0x02])) // Configure pin 0 Digital, pin 1 Analog
 }
 function setPinIoConfiguration(characteristic) {
-	alert("set IO");
+	//alert("set IO");
 	return characteristic.writeValue(new Uint32Array([0x02])) //   pin 0 Output, pin 1 Input
 }
 
@@ -82,7 +82,7 @@ function startService (characteristic) {
 	microbit.handleWriteValue = characteristic;
 	return setPinValue(0x00, 0x00) // P0 = 0
 	.then(() => {
-		alert("start");
+		//alert("start");
 		characteristic.startNotifications();
 		characteristic.addEventListener('characteristicvaluechanged', (event) => {
 			let pin = event.target.value.getUint8(0)
