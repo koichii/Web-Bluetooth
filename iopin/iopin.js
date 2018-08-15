@@ -48,7 +48,7 @@ function connect() {
 			.then(setPinIoConfiguration)
 		})
 		.then(() => {
-			alert("set PINDATA");
+			//alert("set PINDATA");
 			return service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
 			.then(startService)
 		})
@@ -60,11 +60,11 @@ function connect() {
 }
 
 function setPinAdConfiguration(characteristic) {
-	//alert("set AD");
+	alert("set AD");
 	return characteristic.writeValue(new Uint32Array([0x02])) // Configure pin 0 Digital, pin 1 Analog
 }
 function setPinIoConfiguration(characteristic) {
-	//alert("set IO");
+	alert("set IO");
 	return characteristic.writeValue(new Uint32Array([0x02])) //   pin 0 Output, pin 1 Input
 }
 
