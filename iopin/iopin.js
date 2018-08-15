@@ -48,6 +48,7 @@ function connect() {
 			.then(setPinIoConfiguration)
 		})
 		.then(() => {
+			alert("set PINDATA");
 			return service.getCharacteristic(PINDATA_CHARACTERISTIC_UUID)
 			.then(startService)
 		})
