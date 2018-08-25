@@ -28,46 +28,36 @@ function connect () {
 	navigator.bluetooth.requestDevice({
 		filters: [{
 			namePrefix: DEVICE_NAME_PREFIX
-		}]
+		}],
+		optionalServices: [ACCELEROMETERSERVICE_SERVICE_UUID] // to avoid Security Error
 	})
 	.then(device => {
 		connectDevice = device
-		device.gatt.connect()
-		.then(server => {
-			server.getPrimaryService(ACCELEROMETERSERVICE_SERVICE_UUID)
-			.then(service => {
-				chosenService = service;
-				service.getCharacteristic(ACCELEROMETERDATA_CHARACTERISTIC_UUID)
-				.then(startService)
-				.catch(error => {
-					console.log(error)
-					alert(error)
-				})
+		return device.gatt.connect()
+	})
+	.then(server => {
+		return server.getPrimaryService(ACCELEROMETERSERVICE_SERVICE_UUID)
+	})
+	.then(service => {
+		chosenService = service;
+		return service.getCharacteristic(ACCELEROMETERDATA_CHARACTERISTIC_UUID)
+	})
+	.then(characteristic => {
+		characteristic.startNotifications()
+		.then(() => {
+			//alert(MSG_CONNECTED)
+			characteristic.addEventListener('characteristicvaluechanged', function (event) { // event handler
+				var AcceleratorX = event.target.value.getInt16(0, true)
+				document.js.x.value = AcceleratorX
+				var AcceleratorY = event.target.value.getInt16(2, true)
+				document.js.y.value = AcceleratorY
+				var AcceleratorZ = event.target.value.getInt16(4, true)
+				document.js.z.value = AcceleratorZ
 			})
 		})
-		.catch(error => {
-			console.log(error)
-			alert(error)
-		})
 	})
-}
-
-// start service event
-function startService (characteristic) {
-	characteristic.startNotifications()
-	.then(char => {
-		alert(MSG_CONNECTED)
-		characteristic.addEventListener('characteristicvaluechanged', function (event) { // event handler
-			var AcceleratorX = event.target.value.getUint16(0) / 1000.0
-			console.log('x:' + AcceleratorX)
-			document.js.x.value = AcceleratorX
-			var AcceleratorY = event.target.value.getUint16(2) / 1000.0
-			console.log('y:' + AcceleratorY)
-			document.js.y.value = AcceleratorY
-			var AcceleratorZ = event.target.value.getUint16(4) / 1000.0
-			console.log('z:' + AcceleratorZ)
-			document.js.z.value = AcceleratorZ
-		})
-		console.log('Accelerometer:', char)
+	.catch(error => {
+		console.log(error)
+		alert(error)
 	})
 }

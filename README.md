@@ -5,8 +5,11 @@
 
 Android の Chrome ブラウザで動作テスト
 
-### [加速度センサー](./accelerometer)
-[加速度センサー ソース](./accelerometer/accelerometer.js)
+|サービス      |html                          |js                                     |
+|--------------|------------------------------|---------------------------------------|
+|加速度センサー|[index.html](./accelerometer) |[js](./accelerometer/accelerometer.js) |
+|IOピン        |[index.html](./iopin)         |[js](./iopin/iopin.js)                 |
+
 
 ### [LED](./microbit)
 [LED ソース](./microbit/microbit.js)
