@@ -3,19 +3,20 @@
 
 ## microbit を BLE で Web-bluetooth につなぐ
 
-Android の Chrome ブラウザで動作テスト
+## 動作環境
 
-|サービス      |html                          |js                                     |
-|--------------|------------------------------|---------------------------------------|
-|加速度センサー|[index.html](./accelerometer) |[js](./accelerometer/accelerometer.js) |
-|IOピン        |[index.html](./iopin)         |[js](./iopin/iopin.js)                 |
+|OS            |動作環境                                                                         |
+|--------------|---------------------------------------------------------------------------------|
+|Mac           |Google Chrome                                                                                                    |
+|Android       |Google Chrome                                                                                                    |
+|Windows       |[Google Chrome 70](https://github.com/WebBluetoothCG/web-bluetooth/blob/master/implementation-status.md#chrome) |
 
+## サンプル
 
-### [LED](./microbit)
-[LED ソース](./microbit/microbit.js)
-
-### [IO ピン](./iopin)
-[IO ピン ソース](./iopin/iopin.js)
+|サービス      |サンプル                                                                         |
+|--------------|---------------------------------------------------------------------------------|
+|加速度センサー|[accelerometer](https://koichii.github.io/microbit-web-bluetooth/accelerometer/) |
+|IOピン        |[iopin](https://koichii.github.io/microbit-web-bluetooth/iopin/)                 |
 
 ### マイクロビットのプログラムソース
 
