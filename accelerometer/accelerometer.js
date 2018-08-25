@@ -1,58 +1,41 @@
-/* define Parameters **************************************************************/
-const DEVICE_NAME_PREFIX = 'BBC micro:bit'
-const ACCELEROMETERSERVICE_SERVICE_UUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8'
-const ACCELEROMETERDATA_CHARACTERISTIC_UUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
-// Messages
-const MSG_CONNECTED = 'Connected!!'
-const MSG_CONNECT_ERROR = 'Failed to Conect'
-const MSG_DISCONNECTED = 'Disconnected'
 /*********************************************************************************/
 
-// connected device value
-var connectDevice = null
-var chosenService = null
-
-// disconnect process
-function disconnect () {
-	if (!connectDevice || !connectDevice.gatt.connected)
-		return
-	connectDevice.gatt.disconnect()
-	alert(MSG_DISCONNECTED)
-	document.js.x.value = ''
-	document.js.y.value = ''
-	document.js.z.value = ''
+var mwb = {}
+mwb.accelerometer ={
+	service: {uuid: 'e95d0753-251d-470a-a062-fa1922dfa9a8'},
+	data: {uuid: 'e95dca4b-251d-470a-a062-fa1922dfa9a8'},
+	device: null,
+	callback: null,
 }
-
-// connect process
-function connect () {
+// callback(x, y, z)
+mwb.accelerometer.start = function(callback) {
+	var $this = this;
+	$this.callback = callback
 	navigator.bluetooth.requestDevice({
 		filters: [{
-			namePrefix: DEVICE_NAME_PREFIX
+			namePrefix: 'BBC micro:bit'
 		}],
-		optionalServices: [ACCELEROMETERSERVICE_SERVICE_UUID] // to avoid Security Error
+		optionalServices: [$this.service.uuid] // to avoid Security Error
 	})
 	.then(device => {
-		connectDevice = device
+		$this.device = device
 		return device.gatt.connect()
 	})
 	.then(server => {
-		return server.getPrimaryService(ACCELEROMETERSERVICE_SERVICE_UUID)
+		return server.getPrimaryService($this.service.uuid)
 	})
 	.then(service => {
-		chosenService = service;
-		return service.getCharacteristic(ACCELEROMETERDATA_CHARACTERISTIC_UUID)
-	})
-	.then(characteristic => {
-		characteristic.startNotifications()
-		.then(() => {
-			//alert(MSG_CONNECTED)
-			characteristic.addEventListener('characteristicvaluechanged', function (event) { // event handler
-				var AcceleratorX = event.target.value.getInt16(0, true)
-				document.js.x.value = AcceleratorX
-				var AcceleratorY = event.target.value.getInt16(2, true)
-				document.js.y.value = AcceleratorY
-				var AcceleratorZ = event.target.value.getInt16(4, true)
-				document.js.z.value = AcceleratorZ
+		// 加速度センサーの値
+		service.getCharacteristic($this.data.uuid)
+		.then(characteristic => {
+			characteristic.startNotifications()
+			.then(() => {
+				characteristic.addEventListener('characteristicvaluechanged', function (event) { // event handler
+					var x = event.target.value.getInt16(0, true)
+					var y = event.target.value.getInt16(2, true)
+					var z = event.target.value.getInt16(4, true)
+					$this.callback(x, y, z)
+				})
 			})
 		})
 	})
@@ -60,4 +43,10 @@ function connect () {
 		console.log(error)
 		alert(error)
 	})
+}
+mwb.accelerometer.stop = function() {
+	if (!this.device || !this.device.gatt.connected)
+		return
+	this.device.gatt.disconnect()
+	this.callback('', '', '')
 }

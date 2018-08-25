@@ -17,5 +17,21 @@ micro:bit BLE
  Y=<input type="text" name="y" value="" />/
  Z=<input type="text" name="z" value="" />
 </form>
+<script type="text/javascript">
+
+// disconnect process
+function disconnect () {
+	mwb.accelerometer.stop();
+}
+
+function connect () {
+	console.log("START6!!")
+	mwb.accelerometer.start(function disp(x, y, z) {
+		document.js.x.value = x
+		document.js.y.value = y
+		document.js.z.value = z
+	})
+}
+</script>
 </body>
 </html>
