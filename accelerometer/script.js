@@ -9,6 +9,7 @@ mwb.accelerometer ={
 }
 // callback(x, y, z)
 mwb.accelerometer.start = function(callback) {
+console.log(navigator.bluetooth);
 	var $this = this;
 	$this.callback = callback
 	navigator.bluetooth.requestDevice({

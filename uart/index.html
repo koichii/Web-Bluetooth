@@ -12,24 +12,26 @@
 micro:bit BLE
 <input type="button" value="Connect" onclick="connect();"/>
 <input type="button" value="Disconnect" onclick="disconnect();" /><br />
-  Acceleration<br />
- X=<input type="text" name="x" value="" />/
- Y=<input type="text" name="y" value="" />/
- Z=<input type="text" name="z" value="" />
+<input type="button" value="send A" onclick="send('A.');" /><br />
+<input type="button" value="send B" onclick="send('B.');" /><br />
+  UART<br />
+ S=<input type="text" name="s" value="" />
 </form>
 <script type="text/javascript">
 
 // disconnect process
 function disconnect () {
-	mwb.accelerometer.stop();
+	mwb.uart.stop();
+}
+
+function send (str) {
+	mwb.uart.send(str);
 }
 
 function connect () {
 	console.log(navigator.bluetooth);
-	mwb.accelerometer.start(function (x, y, z) {
-		document.js.x.value = x
-		document.js.y.value = y
-		document.js.z.value = z
+	mwb.uart.start(function (s) {
+		document.js.s.value = s
 	})
 }
 </script>
