@@ -30,6 +30,8 @@ Windows 8.1 以上で、Google Chrome （バージョン70以上）がひつよ�
 
 [https://makecode.microbit.org/_TF8D3VL82WVt](https://makecode.microbit.org/_TF8D3VL82WVt)
 
+[https://makecode.microbit.org/_01rV92fVMLiw](https://makecode.microbit.org/_01rV92fVMLiw)
+
 ## ブラウザのプログラム
 Google Chromeブラウザでは、それぞれ以下URL（ユーアールエル）をひらいてプログラムを実行（じっこう）します。
 
