@@ -5,25 +5,49 @@
 <script type="text/javascript" src="iopin.js"></script>
 <script type="text/javascript" src="gauge.js"></script>
 <title>iopin</title>
+<style>
+.box1 {
+    padding: 0.5em 1em;
+    margin: 0;
+    font-weight: bold;
+    color: #000000;/*文字色*/
+    background: #FFF;
+    border: solid 1px #000000;/*線*/
+    border-radius: 0px;/*角の丸み*/
+    width: 420px;
+    text-align: center;
+}
+.box2 {
+    padding: 0.5em 1em;
+    margin: 0;
+    font-weight: bold;
+    color: #000000;/*文字色*/
+    background: #FFF;
+    border: solid 1px #000000;/*線*/
+    border-radius: 10px;/*角の丸み*/
+    width: 420px;
+    text-align: center;
+}
+.box2 p {
+    margin: 0; 
+    padding: 0;
+}
+</style>
 </head>
-
 <body>
 	
 <form name="js">
-	<h2>micro:bit BLE</h2>
-	<input type="button" value="接続" onclick="connect();"/> &nbsp;  <input type="button" value="切断" onclick="disconnect();" />
-	
-	<h2>P0 出力</h2>
-	<input type="button" value="ON"  onclick="setPinValue(0x00, 0x01);"/> P0 = 1 
-	<input type="button" value="OFF" onclick="setPinValue(0x00, 0x00);"/> P0 = 0
 
 	<h2> マイクロビット テスター</h2>
-	Pin = <input type="text" name="p" value="" />
-	value = <input type="text" name="v" value="" /><br />
-	V =<input type="text" name="x" value="" />
 
+	<div class="box2">
+		<canvas id="foo" width="380" height="150"></canvas>
+		<p id="disp"></p>
+	</div>
+	<div class="box1">
+		<input type="button" value="接続" onclick="connect();"/> &nbsp;  <input type="button" value="切断" onclick="disconnect();" />
+	</div>
 </form>
-<canvas id="foo" width="380" height="150"></canvas>
 
 <script>
 	window.onerror = function (msg, file, line, column, err) {
@@ -33,37 +57,56 @@
 (window.onload = function() {
 	var opts = {
 		angle: 0.15, // The span of the gauge arc
-		lineWidth: 0.44, // The line thickness
+		lineWidth: 0.04, // The line thickness
 		radiusScale: 1, // Relative radius
 		pointer: {
 			length: 0.6, // // Relative to gauge radius
-			strokeWidth: 0.035, // The thickness
-			color: '#000000' // Fill color
+			strokeWidth: 0.015, // The thickness
+			color: '#FF0000' // Fill color
 		},
 		limitMax: false,		 // If false, max value increases automatically if value > maxValue
 		limitMin: false,		 // If true, the min value of the gauge will be fixed
 		colorStart: '#6FADCF',	 // Colors
-		colorStop: '#8FC0DA',		// just experiment with them
-		strokeColor: '#E0E0E0',	// to see which ones work best for you
+		colorStop: '#FFFFFF',	 // Colors
+		strokeColor: '#FFFFFF',	// to see which ones work best for you
 		generateGradient: true,
 		highDpiSupport: true,		 // High resolution support
+		staticLabels: {
+		  font: "10px sans-serif",  // Specifies font
+		  labels: [0, 1, 2, 3],  // Print labels at these values
+		  color: "#000000",  // Optional: Label text color
+		  fractionDigits: 0  // Optional: Numerical precision. 0=round off.
+		},
+
+		renderTicks: {
+		  divisions: 7,
+		  divWidth: 1.1,
+		  divLength: 1.7,
+		  divColor: '#333333',
+		  subDivisions: 5,
+		  subLength: 0.5,
+		  subWidth: 0.6,
+		  subColor: '#666666'
+		},
 
 	};
 	var target = document.getElementById('foo'); // your canvas element
 	var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-	gauge.maxValue = 350; // set max gauge value
+	gauge.maxValue = 3.5; // set max gauge value
 	gauge.setMinValue(0);	// Prefer setter over gauge.minValue = 0
 	gauge.animationSpeed = 128; // set animation speed (32 is default value)
 
+	var disp = document.getElementById('disp'); // your canvas element
+	
 	// 973 243 2.82 v
 	// 500 126 1.51 v
 	registerCallback((pin, value) =>{
-		document.js.p.value = pin;
-		document.js.v.value = value;
+		//document.js.p.value = pin;
+		//document.js.v.value = value;
 		// 現在の電池電圧を3.00Vとする
 		let value2 = Math.round(value * 4 /1024 * 3.00 *10) / 10
-		document.js.x.value = value2;
-		gauge.set(value2 * 100); // set actual value
+		disp.textContent  = "電圧 " + value2 + " V";
+		gauge.set(value2); // set actual value
 	});
 })();
 	
