@@ -61,7 +61,7 @@
 		マイクロビットのGNDとP1で電圧を測定する
 	</li>
 	
-	</ul>
+</ul>
 	
 <script>
 	window.onerror = function (msg, file, line, column, err) {
@@ -116,12 +116,12 @@
 	// 973 243 2.82 v
 	// 500 126 1.51 v
 	registerCallback((pin, value) =>{
-		//document.js.p.value = pin;
-		//document.js.v.value = value;
-		// 現在の電池電圧を3.00Vとする
-		let value2 = Math.round(value * 4 /1024 * 3.00 *10) / 10
-		disp.textContent  = "電圧 " + value2 + " V";
-		gauge.set(value2); // set actual value
+		if (pin == 1) {
+			// 現在の電池電圧を3.00Vとする
+			let value2 = Math.round(value * 4 /1024 * 3.00 *10) / 10
+			disp.textContent  = "電圧 " + value2 + " V";
+			gauge.set(value2); // set actual value
+		}
 	});
 })();
 	
